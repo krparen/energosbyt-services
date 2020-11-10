@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.universal.service.queue;
 
-import com.azoft.energosbyt.universal.dto.rabbit.BasePayCashLkk;
+import com.azoft.energosbyt.dto.rabbit.BasePayCashLkk;
 import com.azoft.energosbyt.universal.service.RabbitService;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;

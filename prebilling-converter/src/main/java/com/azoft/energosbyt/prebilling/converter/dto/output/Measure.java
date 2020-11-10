@@ -1,5 +1,6 @@
 package com.azoft.energosbyt.prebilling.converter.dto.output;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Measure {
   private String address_full;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = dateFormat) // отвечает за десериализацию
   @DateTimeFormat(pattern = dateFormat) // отвечает за сериализацию
-  private Date measure_date;
+  private LocalDateTime measure_date;
   private String measure_type;
   private String measure_form;
   private List<RegisterValue> register_value = new ArrayList<>();

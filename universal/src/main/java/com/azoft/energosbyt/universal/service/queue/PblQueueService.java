@@ -1,7 +1,7 @@
 package com.azoft.energosbyt.universal.service.queue;
 
+import com.azoft.energosbyt.dto.rabbit.BaseMeterValue;
 import com.azoft.energosbyt.universal.dto.MeterValue;
-import com.azoft.energosbyt.universal.dto.rabbit.BaseMeterValue;
 import com.azoft.energosbyt.universal.service.RabbitService;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;

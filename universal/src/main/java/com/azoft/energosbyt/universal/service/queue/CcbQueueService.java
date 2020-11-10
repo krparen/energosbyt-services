@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.universal.service.queue;
 
-import com.azoft.energosbyt.universal.dto.rabbit.*;
+import com.azoft.energosbyt.dto.rabbit.*;
 import com.azoft.energosbyt.universal.exception.ApiException;
 import com.azoft.energosbyt.universal.exception.ErrorCode;
 import com.azoft.energosbyt.universal.service.RabbitService;
@@ -133,14 +133,14 @@ public class CcbQueueService {
 
     private BaseMeter createMeterValuesRabbitRequest(String meterId) {
         BaseMeter rabbitRequest = new BaseMeter();
-        rabbitRequest.setSystem_id(thisSystemId);
+        rabbitRequest.setSystemId(thisSystemId);
         rabbitRequest.setId(meterId);
         return rabbitRequest;
     }
 
     private BaseMeter createMetersRabbitRequest(String personId) {
         BaseMeter rabbitRequest = new BaseMeter();
-        rabbitRequest.setSystem_id(thisSystemId);
+        rabbitRequest.setSystemId(thisSystemId);
 
         BaseMeter.Srch search = new BaseMeter.Srch();
         search.setPerson_Id(personId);

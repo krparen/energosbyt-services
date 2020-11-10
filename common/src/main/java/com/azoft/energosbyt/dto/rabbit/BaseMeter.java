@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
-public class BaseMeter implements SystemIdHolder {
+@Getter
+@Setter
+@ToString
+public class BaseMeter extends AbstractRabbitDto implements SystemIdHolder {
   private Srch srch = new Srch();
   private Srch_res srch_res = new Srch_res();
 
@@ -61,10 +66,6 @@ public class BaseMeter implements SystemIdHolder {
       private List<Service_point> SPs = new ArrayList<>();
     }
   }
-
-
-  private String error_code;
-  private String error_message;
 
   @JsonProperty("system_id")
   private String systemId;

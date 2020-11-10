@@ -1,4 +1,4 @@
-package com.azoft.energosbyt.universal.dto.rabbit;
+package com.azoft.energosbyt.dto.rabbit;
 
 import lombok.Getter;
 import lombok.Setter;

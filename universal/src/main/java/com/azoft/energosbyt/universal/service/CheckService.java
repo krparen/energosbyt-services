@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.universal.service;
 
-import com.azoft.energosbyt.universal.dto.rabbit.BasePerson;
+import com.azoft.energosbyt.dto.rabbit.BasePerson;
 import com.azoft.energosbyt.universal.dto.CheckRequest;
 import com.azoft.energosbyt.universal.dto.CheckResponse;
 import com.azoft.energosbyt.universal.service.queue.CcbQueueService;

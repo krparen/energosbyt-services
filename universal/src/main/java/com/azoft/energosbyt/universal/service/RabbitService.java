@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.universal.service;
 
-import com.azoft.energosbyt.universal.dto.rabbit.AbstractRabbitDto;
+import com.azoft.energosbyt.dto.rabbit.AbstractRabbitDto;
 import com.azoft.energosbyt.universal.exception.ApiException;
 import com.azoft.energosbyt.universal.exception.ErrorCode;
 import com.fasterxml.jackson.core.JsonProcessingException;

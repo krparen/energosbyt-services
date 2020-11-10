@@ -1,6 +1,5 @@
-package com.azoft.energosbyt.universal.dto.rabbit;
+package com.azoft.energosbyt.dto.rabbit;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

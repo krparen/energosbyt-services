@@ -1,12 +1,13 @@
-package com.azoft.energosbyt.universal.dto.rabbit;
+package com.azoft.energosbyt.dto.rabbit;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
