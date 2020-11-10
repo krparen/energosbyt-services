@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: fiscaladmin
+    password: Ec0PyqvD
+    hikari:
+      maximum-pool-size: 5
+    url: jdbc:postgresql://10.5.2.48:5432/postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        order_updates: true
+        order_inserts: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db-migrations/explicit-order.xml
+
+
+
+
+energosbyt:
+  application:
+    this-system-id: 1010
+    qiwi-system-id: QIWI
+  rabbit:
+    host: 10.5.3.70
+    port: 5672
+    username: admin
+    password: Etooshagh5
+    request:
+      check:
+        queue-name: ccb
+      pay:
+        queue-name: pay
+      timeout-in-ms: 30000

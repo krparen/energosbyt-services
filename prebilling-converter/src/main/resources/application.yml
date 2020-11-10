@@ -1,0 +1,33 @@
+server:
+  port: 8032
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: fiscaladmin
+    password: Ec0PyqvD
+    hikari:
+      maximum-pool-size: 5
+    url: jdbc:postgresql://10.5.2.48:5432/postgres
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+      sensitive: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+energosbyt:
+  rabbit:
+    host: 10.5.3.70
+    port: 5672
+    username: admin
+    password: Etooshagh5
+    input-queue: pb
+    output-queue: pb.out
+    error-queue: pb.error
+    request:
+      timeout-in-ms: 30000
