@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.prebilling.converter.converter;
 
-import com.azoft.energosbyt.prebilling.converter.dto.input.BaseMeterValue;
+import com.azoft.energosbyt.dto.rabbit.BaseMeterValue;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Measure;
 import com.azoft.energosbyt.prebilling.converter.dto.output.RegisterValue;
 import java.util.ArrayList;

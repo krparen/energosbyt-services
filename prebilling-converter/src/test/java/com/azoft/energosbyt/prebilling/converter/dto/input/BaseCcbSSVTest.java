@@ -2,6 +2,7 @@ package com.azoft.energosbyt.prebilling.converter.dto.input;
 
 import com.azoft.energosbyt.prebilling.converter.BasicSpringBootTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.azoft.energosbyt.dto.rabbit.BaseCcbSSV;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

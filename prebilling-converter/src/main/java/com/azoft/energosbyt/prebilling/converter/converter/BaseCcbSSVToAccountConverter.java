@@ -1,10 +1,8 @@
 package com.azoft.energosbyt.prebilling.converter.converter;
 
-import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbSSV;
-import com.azoft.energosbyt.prebilling.converter.dto.input.StatementConstructDetail;
+import com.azoft.energosbyt.dto.rabbit.BaseCcbSSV;
+import com.azoft.energosbyt.dto.rabbit.StatementConstructDetail;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Account;
-import com.azoft.energosbyt.prebilling.converter.service.ReferenceQueryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

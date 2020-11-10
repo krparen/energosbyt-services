@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.prebilling.converter.converter;
 
-import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbPremise;
+import com.azoft.energosbyt.dto.rabbit.BaseCcbPremise;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Address;
 import com.azoft.energosbyt.prebilling.converter.service.ReferenceQueryService;
 import org.apache.logging.log4j.util.Strings;

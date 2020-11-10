@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.prebilling.converter.converter;
 
-import com.azoft.energosbyt.prebilling.converter.dto.input.SystemIdHolder;
+import com.azoft.energosbyt.dto.rabbit.SystemIdHolder;
 import com.azoft.energosbyt.prebilling.converter.service.ReferenceQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 

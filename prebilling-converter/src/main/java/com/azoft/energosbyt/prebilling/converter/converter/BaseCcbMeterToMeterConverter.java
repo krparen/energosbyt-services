@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.prebilling.converter.converter;
 
-import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbMeter;
+import com.azoft.energosbyt.dto.rabbit.BaseCcbMeter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Meter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Register;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.azoft.energosbyt.prebilling.converter.converter;
 
-import com.azoft.energosbyt.prebilling.converter.dto.input.BaseOffice;
+import com.azoft.energosbyt.dto.rabbit.BaseOffice;
 import com.azoft.energosbyt.prebilling.converter.dto.output.District;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Division;
 import com.azoft.energosbyt.prebilling.converter.dto.output.ImportDivision;

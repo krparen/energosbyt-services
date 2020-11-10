@@ -1,7 +1,7 @@
 package com.azoft.energosbyt.prebilling.converter.processor;
 
+import com.azoft.energosbyt.dto.rabbit.BaseCcbProvider;
 import com.azoft.energosbyt.prebilling.converter.converter.Converter;
-import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbProvider;
 import com.azoft.energosbyt.prebilling.converter.dto.output.ImportProvider;
 import com.azoft.energosbyt.prebilling.converter.service.RabbitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
