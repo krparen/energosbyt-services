@@ -26,7 +26,7 @@ public class BaseOfficeToImportDivisionConverter extends AbstractConverter<BaseO
                 division.setInform_system(systemCode);
                 division.setExt_id(branch.getCode());
                 division.setName(branch.getName());
-                division.setExt_id_company(inputDivision.getDivision());
+                division.setExt_id_company(inputDivision.getDivBase());
                 division.setDistricts(getDistricts(branch.getOffices()));
                 divisions.add(division);
             });

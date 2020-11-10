@@ -17,6 +17,7 @@ public class BaseOffice implements SystemIdHolder {
     @Data
     public static class ClDivision {
         String division;
+        String divBase;
         List<ClBranch> branches = new ArrayList<>();
     }
 
