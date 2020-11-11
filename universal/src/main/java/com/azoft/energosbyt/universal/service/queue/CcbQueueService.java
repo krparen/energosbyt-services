@@ -1,18 +1,14 @@
 package com.azoft.energosbyt.universal.service.queue;
 
 import com.azoft.energosbyt.dto.rabbit.*;
+import com.azoft.energosbyt.service.rabbit.RabbitService;
 import com.azoft.energosbyt.universal.exception.ApiException;
 import com.azoft.energosbyt.universal.exception.ErrorCode;
-import com.azoft.energosbyt.universal.service.RabbitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 
-@Service
 @Slf4j
 public class CcbQueueService {
 
@@ -24,13 +20,15 @@ public class CcbQueueService {
     private static final String TYPE_GET_BALANCE = "getHdBalance";
     private static final String TYPE_GET_ACCOUNT_INFO = "getAccInfo";
 
-    @Value("${energosbyt.rabbit.request.check.queue-name}")
-    private String ccbQueueName;
-    @Value("${energosbyt.application.this-system-id}")
-    protected String thisSystemId;
+    private final String ccbQueueName;
+    private final String prodSystemId;
+    private final RabbitService rabbitService;
 
-    @Autowired
-    private RabbitService rabbitService;
+    public CcbQueueService(String ccbQueueName, String prodSystemId, RabbitService rabbitService) {
+        this.ccbQueueName = ccbQueueName;
+        this.prodSystemId = prodSystemId;
+        this.rabbitService = rabbitService;
+    }
 
     public BaseAccount getAccount(String accountId, String system) {
         MessageProperties properties = createMessageProperties(TYPE_GET_ACCOUNT_INFO);
@@ -133,14 +131,14 @@ public class CcbQueueService {
 
     private BaseMeter createMeterValuesRabbitRequest(String meterId) {
         BaseMeter rabbitRequest = new BaseMeter();
-        rabbitRequest.setSystemId(thisSystemId);
+        rabbitRequest.setSystemId(prodSystemId);
         rabbitRequest.setId(meterId);
         return rabbitRequest;
     }
 
     private BaseMeter createMetersRabbitRequest(String personId) {
         BaseMeter rabbitRequest = new BaseMeter();
-        rabbitRequest.setSystemId(thisSystemId);
+        rabbitRequest.setSystemId(prodSystemId);
 
         BaseMeter.Srch search = new BaseMeter.Srch();
         search.setPerson_Id(personId);
@@ -150,7 +148,7 @@ public class CcbQueueService {
 
     private BasePerson createSearchPersonByAccountRabbitRequest(String account) {
         BasePerson rabbitRequest = new BasePerson();
-        rabbitRequest.setSystem_id(thisSystemId);
+        rabbitRequest.setSystem_id(prodSystemId);
 
         BasePerson.Srch search = new BasePerson.Srch();
         search.setAccount_number(account);

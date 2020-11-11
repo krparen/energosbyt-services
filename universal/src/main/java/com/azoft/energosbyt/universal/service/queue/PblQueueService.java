@@ -1,35 +1,34 @@
 package com.azoft.energosbyt.universal.service.queue;
 
 import com.azoft.energosbyt.dto.rabbit.BaseMeterValue;
+import com.azoft.energosbyt.service.rabbit.RabbitService;
 import com.azoft.energosbyt.universal.dto.MeterValue;
-import com.azoft.energosbyt.universal.service.RabbitService;
+import org.springframework.amqp.core.MessageProperties;
+
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.UUID;
-import org.springframework.amqp.core.MessageProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
 public class PblQueueService {
 
   private static final String TYPE_SEND_METER_VALUES = "setMv";
-  private static final String PBL_QUEUE_NAME = "pbl";
-
   private static final DateTimeFormatter DATE_TIME_FORMATTER =
       DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
-  @Autowired
-  private RabbitService rabbitService;
+  private final String pblQueueName;
+  private final RabbitService rabbitService;
+
+  public PblQueueService(String pblQueueName, RabbitService rabbitService) {
+    this.pblQueueName = pblQueueName;
+    this.rabbitService = rabbitService;
+  }
 
   public void sendMeterValues(String system, String account, LocalDateTime mvDate, MeterValue meterValue) {
     BaseMeterValue bodyObject = createSendMeterValuesRabbitRequest(account, meterValue.getMeterId(), meterValue.getMeterNumber(),
         meterValue.getT1(), meterValue.getT2(), meterValue.getT3(), mvDate);
     MessageProperties messageProperties = createMessageProperties(TYPE_SEND_METER_VALUES, system);
-    rabbitService.send(PBL_QUEUE_NAME, messageProperties, bodyObject);
+    rabbitService.send(pblQueueName, messageProperties, bodyObject);
   }
 
   private BaseMeterValue createSendMeterValuesRabbitRequest(String account, String meterId, String meterNumber,
@@ -56,7 +55,4 @@ public class PblQueueService {
     return messageProperties;
   }
 
-  private Date dateFromLocalDateTime(LocalDateTime dateToConvert) {
-    return Date.from(dateToConvert.atZone(ZoneId.systemDefault()).toInstant());
-  }
 }

@@ -1,5 +1,6 @@
 package com.azoft.energosbyt.prebilling.converter.service;
 
+import com.azoft.energosbyt.dto.rabbit.AbstractRabbitDto;
 import com.azoft.energosbyt.prebilling.converter.exception.ApiException;
 import com.azoft.energosbyt.prebilling.converter.exception.ErrorCode;
 import com.azoft.energosbyt.service.rabbit.RabbitService;
@@ -9,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -119,6 +121,34 @@ public class RabbitServiceImpl implements RabbitService {
             throw new ApiException(message, ErrorCode.OPERATION_PROCESSING_ERROR);
         }
         return responseAsString;
+    }
+
+    public <T extends AbstractRabbitDto> T sendAndReceive(String queueName, MessageProperties messageProperties, T messageBody) {
+        String replyQueueName = messageProperties.getHeader(HEADER_REPLY_TO);
+
+        try {
+            if (replyQueueName == null || replyQueueName.isEmpty()) {
+                replyQueueName = declareReplyQueueWithUuidName();
+                messageProperties.setHeader(HEADER_REPLY_TO, replyQueueName);
+            }
+
+            Message personRequestMessage = new Message(toJsonToBytes(messageBody), messageProperties);
+
+            template.send(queueName, personRequestMessage);
+            T response = (T) safelyReceiveResponse(replyQueueName, messageBody.getClass());
+
+            if (Strings.isNotBlank(response.getError_code()) || Strings.isNotBlank(response.getError_message())) {
+                String message = String.format(RESPONSE_ERROR_DATA_TEMPL, response.getError_code(), response.getError_message());
+                log.error(message);
+                throw new ApiException(message, ErrorCode.OPERATION_PROCESSING_ERROR);
+            }
+
+            return response;
+        } finally {
+            if (replyQueueName != null) {
+                rabbitAdmin.deleteQueue(replyQueueName);
+            }
+        }
     }
 
     private <T> T safelyDeserializeFromString(String responseAsString, Class<T> clazz) {

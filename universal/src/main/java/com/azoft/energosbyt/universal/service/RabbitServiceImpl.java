@@ -1,6 +1,7 @@
 package com.azoft.energosbyt.universal.service;
 
 import com.azoft.energosbyt.dto.rabbit.AbstractRabbitDto;
+import com.azoft.energosbyt.service.rabbit.RabbitService;
 import com.azoft.energosbyt.universal.exception.ApiException;
 import com.azoft.energosbyt.universal.exception.ErrorCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +20,7 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class RabbitService {
+public class RabbitServiceImpl implements RabbitService {
 
     private static final String HEADER_REPLY_TO = "reply-to";
     private static final String RESPONSE_ERROR_DATA_TEMPL =
@@ -35,11 +36,39 @@ public class RabbitService {
     @Autowired
     protected ObjectMapper mapper;
 
+    @Override
     public void send(String queueName, MessageProperties messageProperties, Object messageBody) {
         Message personRequestMessage = new Message(toJsonToBytes(messageBody), messageProperties);
         template.send(queueName, personRequestMessage);
     }
 
+
+    @Override
+    public void send(String queueName, Message message) {
+        template.send(queueName, message);
+    }
+
+    @Override
+    public <T> T deserializeBodyAsType(Message message, Class<T> type) {
+        String bodyAsString = getMessageBodyAsString(message);
+        return safelyDeserializeFromString(bodyAsString, type);
+    }
+
+    @Override
+    public String getMessageBodyAsString(Message responseMessage) {
+        String responseAsString = null;
+        try {
+            responseAsString = new String(responseMessage.getBody(), StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            String message = "Unsupported encoding for incoming rabbit message";
+            log.error(message + "; rabbit message: {}", responseMessage);
+            throw new ApiException(message, ErrorCode.UNEXPECTED_ERROR);
+        }
+        return responseAsString;
+    }
+
+
+    @Override
     public <T extends AbstractRabbitDto> T sendAndReceive(String queueName, MessageProperties messageProperties, T messageBody) {
         String replyQueueName = messageProperties.getHeader(HEADER_REPLY_TO);
 
@@ -116,27 +145,25 @@ public class RabbitService {
         String responseAsString = getMessageBodyAsString(responseMessage);
 
         T response = null;
-        try {
-            response = mapper.readValue(responseAsString, responseClass);
-        } catch (JsonProcessingException e) {
-            String message = "Rabbit response deserialization failed";
-            log.error(message, e);
-            throw new ApiException(message, e, ErrorCode.UNEXPECTED_ERROR);
-        }
+        response = safelyDeserializeFromString(responseAsString, responseClass);
 
         log.info("response from rabbit: {}", response);
         return response;
     }
 
-    private String getMessageBodyAsString(Message responseMessage) {
-        String responseAsString = null;
+    private <T> T safelyDeserializeFromString(String responseAsString, Class<T> clazz) {
+        T response = null;
         try {
-            responseAsString = new String(responseMessage.getBody(), StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            String message = "Unsupported encoding for incoming rabbit message";
-            log.error(message + "; rabbit message: {}", responseMessage);
-            throw new ApiException(message, ErrorCode.UNEXPECTED_ERROR);
+            response = mapper.readValue(responseAsString, clazz);
+        } catch (JsonProcessingException e) {
+            String message = "Rabbit response deserialization from json failed";
+            log.error(message, e);
+            throw new ApiException(message, e, ErrorCode.UNEXPECTED_ERROR);
         }
-        return responseAsString;
+
+        log.info("deserialized from json: {}", response);
+        return response;
     }
+
+
 }

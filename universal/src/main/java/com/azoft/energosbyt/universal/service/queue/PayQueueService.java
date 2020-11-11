@@ -1,11 +1,8 @@
 package com.azoft.energosbyt.universal.service.queue;
 
 import com.azoft.energosbyt.dto.rabbit.BasePayCashLkk;
-import com.azoft.energosbyt.universal.service.RabbitService;
+import com.azoft.energosbyt.service.rabbit.RabbitService;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
 
-@Service
 public class PayQueueService {
 
     private static final String TYPE_PAY = "setPayLkk";
@@ -26,11 +22,13 @@ public class PayQueueService {
     private static final DateTimeFormatter payDateTimeFormatter =
             DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
-    @Value("${energosbyt.rabbit.request.pay.queue-name}")
-    private String payQueueName;
+    private final String payQueueName;
+    private final RabbitService rabbitService;
 
-    @Autowired
-    private RabbitService rabbitService;
+    public PayQueueService(String payQueueName, RabbitService rabbitService) {
+        this.payQueueName = payQueueName;
+        this.rabbitService = rabbitService;
+    }
 
     public void process(String systemId, String account, BigDecimal sum, String txnId, LocalDateTime txnDate) {
         MessageProperties messageProperties = createMessageProperties(TYPE_PAY, systemId);

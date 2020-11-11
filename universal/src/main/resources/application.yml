@@ -31,8 +31,7 @@ energosbyt:
     username: admin
     password: Etooshagh5
     request:
-      check:
-        queue-name: ccb
-      pay:
-        queue-name: pay
+      ccb-queue-name: ccb
+      pay-queue-name: pay
+      pbl-queue-name: pbl
       timeout-in-ms: 30000
