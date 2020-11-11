@@ -3,7 +3,7 @@ package com.azoft.energosbyt.prebilling.converter.listener;
 import com.azoft.energosbyt.prebilling.converter.exception.ApiException;
 import com.azoft.energosbyt.prebilling.converter.exception.ErrorCode;
 import com.azoft.energosbyt.prebilling.converter.processor.InputMessageProcessor;
-import com.azoft.energosbyt.prebilling.converter.service.RabbitService;
+import com.azoft.energosbyt.service.rabbit.RabbitService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;

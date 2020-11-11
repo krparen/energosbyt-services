@@ -2,6 +2,7 @@ package com.azoft.energosbyt.prebilling.converter.service;
 
 import com.azoft.energosbyt.prebilling.converter.exception.ApiException;
 import com.azoft.energosbyt.prebilling.converter.exception.ErrorCode;
+import com.azoft.energosbyt.service.rabbit.RabbitService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.UnsupportedEncodingException;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class RabbitService {
+public class RabbitServiceImpl implements RabbitService {
 
     private static final String HEADER_REPLY_TO = "reply-to";
     private static final String RESPONSE_ERROR_DATA_TEMPL =
@@ -36,12 +37,14 @@ public class RabbitService {
     @Autowired
     protected ObjectMapper mapper;
 
+    @Override
     public void send(String queueName, MessageProperties messageProperties, Object messageBody) {
         Message personRequestMessage = new Message(toJsonToBytes(messageBody), messageProperties);
         template.send(queueName, personRequestMessage);
     }
 
-    public void send (String queueName, Message message) {
+    @Override
+    public void send(String queueName, Message message) {
         template.send(queueName, message);
     }
 
@@ -99,11 +102,13 @@ public class RabbitService {
         return response;
     }
 
+    @Override
     public <T> T deserializeBodyAsType(Message message, Class<T> type) {
         String bodyAsString = getMessageBodyAsString(message);
         return safelyDeserializeFromString(bodyAsString, type);
     }
 
+    @Override
     public String getMessageBodyAsString(Message responseMessage) {
         String responseAsString = null;
         try {

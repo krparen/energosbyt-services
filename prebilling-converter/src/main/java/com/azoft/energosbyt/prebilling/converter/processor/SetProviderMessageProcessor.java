@@ -3,7 +3,7 @@ package com.azoft.energosbyt.prebilling.converter.processor;
 import com.azoft.energosbyt.dto.rabbit.BaseCcbProvider;
 import com.azoft.energosbyt.prebilling.converter.converter.Converter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.ImportProvider;
-import com.azoft.energosbyt.prebilling.converter.service.RabbitService;
+import com.azoft.energosbyt.service.rabbit.RabbitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 

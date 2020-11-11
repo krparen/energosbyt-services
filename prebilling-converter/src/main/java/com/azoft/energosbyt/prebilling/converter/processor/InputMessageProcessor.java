@@ -4,7 +4,7 @@ import com.azoft.energosbyt.prebilling.converter.converter.Converter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.InformSystemHolder;
 import com.azoft.energosbyt.prebilling.converter.dto.output.wrapper.ConverterResult;
 import com.azoft.energosbyt.prebilling.converter.dto.output.wrapper.ResultWrapper;
-import com.azoft.energosbyt.prebilling.converter.service.RabbitService;
+import com.azoft.energosbyt.service.rabbit.RabbitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

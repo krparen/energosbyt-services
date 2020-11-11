@@ -26,8 +26,8 @@ energosbyt:
     port: 5672
     username: admin
     password: Etooshagh5
-    input-queue: pb
-    output-queue: pb.out
-    error-queue: pb.error
+    input-queue: g_eremeev
+    output-queue: g_eremeev_out
+    error-queue: g_eremeev_error
     request:
       timeout-in-ms: 30000
